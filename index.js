@@ -23,6 +23,15 @@ var App = {
     this.selectedNote = this.notes[0];
   },
   methods: {
+    createNote: function () {
+      var newNote = {
+        id: Date.now(),
+        body: "",
+        timestamp: Date.now(),
+      };
+      this.notes.push(newNote);
+      this.selectedNote = newNote;
+    },
     selectNote: function (note) {
       this.selectedNote = note;
     },
