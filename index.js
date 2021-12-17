@@ -3,12 +3,8 @@
 var App = {
   data: function () {
     return {
-      notes: [
-        { id: 1, body: "This is a first test", timestamp: Date.now() - 2000000 },
-        { id: 2, body: "This is a second test", timestamp: Date.now() - 1000000 },
-        { id: 3, body: "This is a third test", timestamp: Date.now() },
-        { id: 4, body: "", timestamp: Date.now() + 1000000 },
-      ],
+      notes: [],
+      selectedNote: {},
     };
   },
   computed: {
@@ -18,7 +14,19 @@ var App = {
       });
     },
   },
+  created: function () {
+    this.notes = [
+      { id: 1, body: "This is a first test", timestamp: Date.now() - 2000000 },
+      { id: 2, body: "This is a second test", timestamp: Date.now() - 1000000 },
+      { id: 3, body: "This is a third test", timestamp: Date.now() },
+      { id: 4, body: "", timestamp: Date.now() + 1000000 },
+    ];
+    this.selectedNote = this.notes[0];
+  },
   methods: {
+    selectNote: function (note) {
+      this.selectedNote = note;
+    },
     formatTitle: function (body) {
       var maxLength = 20;
       if (body.length > maxLength) {

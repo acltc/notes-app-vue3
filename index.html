@@ -16,17 +16,20 @@
     </div>
     <div class="note-container">
       <div class="note-selectors">
-        <div v-for="note in transformedNotes" class="note-selector">
+        <div
+          v-for="note in transformedNotes"
+          v-on:click="selectNote(note)"
+          v-bind:class="{active: note === selectedNote}"
+          class="note-selector"
+        >
           <p class="note-selector-title">{{ formatTitle(note.body) }}</p>
           <p class="note-selector-timestamp">{{ formatTimestamp(note.timestamp) }}</p>
         </div>
       </div>
       <div class="note-editor">
-        <p class="note-editor-info">Timestamp here...</p>
+        <p class="note-editor-info">{{ formatTimestamp(selectedNote.timestamp) }}</p>
         <textarea class="note-editor-input">
-          First note...
-          
-          Note text here...
+          {{ selectedNote.body }}
         </textarea>
       </div>
     </div>
