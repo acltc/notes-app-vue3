@@ -28,9 +28,11 @@
       </div>
       <div class="note-editor">
         <p class="note-editor-info">{{ formatTimestamp(selectedNote.timestamp) }}</p>
-        <textarea class="note-editor-input">
-          {{ selectedNote.body }}
-        </textarea>
+        <textarea
+          v-model="selectedNote.body"
+          v-on:input="updateNoteTimestamp(selectedNote)"
+          class="note-editor-input"
+        ></textarea>
       </div>
     </div>
   </div>
