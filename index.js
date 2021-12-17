@@ -5,13 +5,20 @@ var App = {
     return {
       notes: [],
       selectedNote: {},
+      searchNoteText: "",
     };
   },
   computed: {
     transformedNotes: function () {
-      return this.notes.slice().sort(function (a, b) {
-        return b.timestamp - a.timestamp;
-      });
+      var searchLower = this.searchNoteText.toLowerCase();
+      return this.notes
+        .filter(function (note) {
+          var bodyLower = note.body.toLowerCase();
+          return bodyLower.indexOf(searchLower) !== -1;
+        })
+        .sort(function (a, b) {
+          return b.timestamp - a.timestamp;
+        });
     },
   },
   created: function () {
@@ -35,6 +42,13 @@ var App = {
     selectNote: function (note) {
       this.selectedNote = note;
     },
+    selectVisibleNote: function () {
+      if (this.transformedNotes.length === 0) {
+        this.selectedNote = {};
+      } else if (this.transformedNotes.indexOf(this.selectedNote) === -1) {
+        this.selectedNote = this.transformedNotes[0];
+      }
+    },
     updateNoteTimestamp: function (note) {
       note.timestamp = Date.now();
     },
@@ -42,11 +56,7 @@ var App = {
       var index = this.notes.indexOf(note);
       if (index !== -1) {
         this.notes.splice(index, 1);
-        if (this.transformedNotes.length > 0) {
-          this.selectedNote = this.transformedNotes[0];
-        } else {
-          this.selectedNote = {};
-        }
+        this.selectVisibleNote();
       }
     },
     formatTitle: function (body) {
