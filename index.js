@@ -38,6 +38,17 @@ var App = {
     updateNoteTimestamp: function (note) {
       note.timestamp = Date.now();
     },
+    deleteNote: function (note) {
+      var index = this.notes.indexOf(note);
+      if (index !== -1) {
+        this.notes.splice(index, 1);
+        if (this.transformedNotes.length > 0) {
+          this.selectedNote = this.transformedNotes[0];
+        } else {
+          this.selectedNote = {};
+        }
+      }
+    },
     formatTitle: function (body) {
       var maxLength = 20;
       if (body.length > maxLength) {
